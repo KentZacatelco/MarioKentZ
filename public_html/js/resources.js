@@ -4,8 +4,8 @@ game.resources = [
 	 * @example
 	 * {name: "example", type:"image", src: "data/img/example.png"},
 	 */
-        {name: "background-tiles", type:"image", src: "data/img/background-tile.png"},
-        {name: "meta-tiles", type:"image", src: "data/img/meta-tile.png"},
+        {name: "background-tiles", type:"image", src: "data/img/background-tiles.png"},
+        {name: "meta-tiles", type:"image", src: "data/img/meta-tiles.png"},
         {name: "Mario", type:"image", src: "data/img/player1.png"},
         
 	/* Atlases 
@@ -18,7 +18,8 @@ game.resources = [
 	 * {name: "example01", type: "tmx", src: "data/map/example01.tmx"},
 	 * {name: "example01", type: "tmx", src: "data/map/example01.json"},
  	 */
-        {name: "TestLevel01", type: "tmx", src: "data/map/TestLevel01.tmx"}
+        {name: "TestLevel01", type: "tmx", src: "data/map/TestLevel01.tmx"},
+        {name: "TestLevel02", type: "tmx", src: "data/map/TestLevel02.tmx"},
 
 	/* Background music. 
 	 * @example

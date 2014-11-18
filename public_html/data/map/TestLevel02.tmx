@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="70" tileheight="70" backgroundcolor="#16dede">
+ <tileset firstgid="1" name="background-tiles" tilewidth="70" tileheight="70">
+  <image source="../img/background-tiles.png" width="910" height="910"/>
+ </tileset>
+ <tileset firstgid="170" name="meta-tiles" tilewidth="70" tileheight="70">
+  <image source="../img/meta-tiles.png" width="350" height="70"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2D4AF8qYwD/yAYF
+  </data>
+ </layer>
+ <layer name="colision" width="20" height="10" opacity="0.33">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2D4gHVUxgA+Lg2Z
+  </data>
+ </layer>
+</map>
