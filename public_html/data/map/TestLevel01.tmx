@@ -30,7 +30,7 @@
   </data>
  </layer>
  <objectgroup name="trigger-entities">
-  <object name="levelTrigger" x="1058" y="438" width="60" height="120">
+  <object name="levelTrigger" x="986" y="442" width="60" height="120">
    <properties>
     <property name="level" value="TestLevel02"/>
     <property name="xSpawn" value="40"/>

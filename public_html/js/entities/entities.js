@@ -8,7 +8,7 @@ game.PlayerEntity = me.Entity.extend({
                 width: 128,
                 height: 128,
                 getShape: function(){
-                    return (new me.Rect (0, 0, 128, 128)).toPolygon();
+                    return (new me.Rect (0, 0, 60, 128)).toPolygon();
                 }
         }]);
     
@@ -70,5 +70,31 @@ game.LevelTrigger = me.Entity.extend({
         me.levelDirector.loadLevel(this.level);
         me.state.current().resetPlayer(this.xSpawn, this.ySpawn);
     }
+    
+});
+
+game.BadGuy = me.Entity.extend({
+    init: function(x, y, settings){
+        this._super(me.Entity, 'init', [x, y, {
+            image: "slime",
+            spritewidth: "60",
+            spriteheight: "28",
+            width: 60,
+            height: 28,
+            getShape: function(){
+                return (new me.Rect(0, 0, 60, 28)).toPolygon();
+            }
+        }]);
+    
+        this.spritewidth = 60;
+        x = this.pos.x;
+        this.startX = x;
+        this.endX = x + width - this.spritewidth;
+        this.pos.x = x + width - this.spritewidth;
+    },
+    
+//    update: funtion(delta){
+//        
+//    }
     
 });
