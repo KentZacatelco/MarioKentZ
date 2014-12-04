@@ -25,12 +25,19 @@ game.PlayerEntity = me.Entity.extend({
     update:function(delta){
         if(me.input.isKeyPressed("right")){
             this.body.vel.x += this.body.accel.x * me.timer.tick;
-            
+            this.flipX(false);
         }else if(me.input.isKeyPressed("left")){
             this.body.vel.x -= this.body.accel.x * me.timer.tick;
-            
+            this.flipX(true);
         }else{
             this.body.vel.x = 0;
+        }
+        
+        if(me.input.isKeyPressed("up")){
+            if(!this.body.jumping && !this.body.falling){
+                this.body.jumping = true;
+                this.body.vel.y -=this.body.accel.y * me.timer.tick;
+            }
         }
         
         this.body.update(delta);
@@ -51,7 +58,17 @@ game.PlayerEntity = me.Entity.extend({
     
     collideHandler: function(response){
         
-    }
+        var ydif = this.pos.y - response.b.pos.y;
+        console.log(ydif);
+        
+        if(responce.b.type === 'badguy'){
+            if(ydif <= -115) {
+                responce.b.alive = false;
+            }else{
+                
+                me.state.change(me.state.MENU);
+            }
+        }
     
     
 });
@@ -96,7 +113,7 @@ game.BadGuy = me.Entity.extend({
         
         this.alwaysUpdate = true;
         this.walkLeft = false;
-        this.type = "BadGuy";
+        this.type = "badguy";
         
         this.renderable.addAnimation("run", [0, 1, 2], 80);
         this.renderable.setCurrentAnimation("run");
@@ -130,5 +147,5 @@ game.BadGuy = me.Entity.extend({
 //    collideHandler: function() {
 //        
 //    }
-    
+//    
 });
