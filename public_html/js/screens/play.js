@@ -6,13 +6,16 @@ game.PlayScreen = me.ScreenObject.extend({
 		// reset the score
 		game.data.score = 0;
                 
-                me.levelDirector.loadLevel("TestLevel01")
+                me.levelDirector.loadLevel("TestLevel01");
                 
                 this.resetPlayer(0, 400);
                 
-                me.input.bindKey(me.input.KEY.RIGHT, "right")
-                me.input.bindKey(me.input.KEY.LEFT, "left")
-                me.input.bindKey(me.input.KEY.UP, "up")
+                me.input.bindKey(me.input.KEY.RIGHT, "right");
+                me.input.bindKey(me.input.KEY.LEFT, "left");
+                me.input.bindKey(me.input.KEY.UP, "up");
+                me.input.bindKey(me.input.KEY.D, "right");
+                me.input.bindKey(me.input.KEY.A, "left");
+                me.input.bindKey(me.input.KEY.W, "up");
 
 		// add our HUD to the game world
 		this.HUD = new game.HUD.Container();

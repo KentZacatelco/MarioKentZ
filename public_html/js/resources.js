@@ -6,10 +6,11 @@ game.resources = [
 	 */
         {name: "background-tiles", type:"image", src: "data/img/background-tiles.png"},
         {name: "meta-tiles", type:"image", src: "data/img/meta-tiles.png"},
-        {name: "item", type:"image", src: "data/img/item-spritesheet.png"},
         {name: "Mario", type:"image", src: "data/img/player1.png"},
-        {name: "title-screen", type:"image", src: "data/img/title-screen.png"},
+        {name: "title-screen", type:"image", src: "data/img/MarioProject.2.png"},
         {name: "slime", type:"image", src: "data/img/slime-spritesheet.png"},
+        {name: "mushroom", type:"image", src: "data/img/mushroom.png"},
+//        {name: "flower", type:"image", src: "data/img/flower.png"},
         
 	/* Atlases 
 	 * @example
@@ -28,6 +29,7 @@ game.resources = [
 	 * @example
 	 * {name: "example_bgm", type: "audio", src: "data/bgm/"},
 	 */	
+        //{name: "MarioGround", type: "audio", src: "data/bgm/"}
 
 	/* Sound effects. 
 	 * @example

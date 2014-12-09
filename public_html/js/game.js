@@ -1,5 +1,6 @@
 
 /* Game namespace */
+
 var game = {
 
 	// an object where to store game information
@@ -40,12 +41,15 @@ var game = {
 	// Run on game resources loaded.
 	"loaded" : function () {
                 me.pool.register("Mario", game.PlayerEntity, true);
-                me.pool.register("badguy", game.badguy);
+                me.pool.register("BadGuy", game.BadGuy);
+                me.pool.register("mushroom", game.Mushroom);
+//                me.pool.register("flower", game.Flower);
                 
                 me.pool.register("levelTrigger", game.LevelTrigger);
             
 		me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());
+//		me.state.set(me.state.GAMEOVER, new game.GameOverScreen());
 
 		// Start the game.
 		me.state.change(me.state.MENU);

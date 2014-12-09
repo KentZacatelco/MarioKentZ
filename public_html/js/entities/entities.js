@@ -11,68 +11,107 @@ game.PlayerEntity = me.Entity.extend({
                     return (new me.Rect (0, 0, 60, 128)).toPolygon();
                 }
         }]);
-    
-        this.renderable.addAnimation("idle", [3]);
+    //this is where the character gets the animation to walk 
+       this.renderable.addAnimation("idle", [3]);
         this.renderable.addAnimation("smallWalk", [8, 9, 10, 11, 12, 13], 80);
+        this.renderable.addAnimation("bigWalk", [14, 15, 16, 17, 18, 19], 80);
+        this.renderable.addAnimation("bigidle", [19]);
+        this.renderable.addAnimation("shrink",[0, 1, 2, 3], 80);
+        this.renderable.addAnimation("grow",[4, 5, 6, 7], 80);
+//        this.renderable.addanimation("powerUp",[25], 80);
+//        this.renderable.addAnimation("powerDown",[7], 80);
+//        this.renderable.addAnimation("poweredUp", [25], 80);
+//        this.renderable.addAnimation("smallpoweredUp", [37], 80);
+//        this.renderable.addAnimation("smallpowerUp", [37], 80);
+//        this.renderable.addAnimation("smallpowerDown", [3], 80);
+//        this.renderable.addAnimation("poweredupwalk", [32, 33, 34, 35, 36, 37], 80);
+//        this.renderable.addAnimation("smallpoweredupwalk", [20, 21, 22, 23, 24, 25], 80);
         
         this.renderable.setCurrentAnimation("idle");
 
-        
+        this.big = false;
         this.body.setVelocity(5, 20);
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
     },
-    
+    //flips the character when it changes direction
     update:function(delta){
-        if(me.input.isKeyPressed("right")){
+        if(me.input.isKeyPressed("right", "D")){
             this.body.vel.x += this.body.accel.x * me.timer.tick;
             this.flipX(false);
-        }else if(me.input.isKeyPressed("left")){
+        }else if(me.input.isKeyPressed("left", "A")){
             this.body.vel.x -= this.body.accel.x * me.timer.tick;
             this.flipX(true);
         }else{
             this.body.vel.x = 0;
         }
-        
-        if(me.input.isKeyPressed("up")){
+    //this code helps jumping
+        if(me.input.isKeyPressed("up", "W")){
             if(!this.body.jumping && !this.body.falling){
                 this.body.jumping = true;
                 this.body.vel.y -=this.body.accel.y * me.timer.tick;
             }
         }
-        
+        //this sets the character to walk
         this.body.update(delta);
         me.collision.check(this, true, this.collideHandler.bind(this), true);
         
-        if(this.body.vel.x !== 0){
-            if(!this.renderable.isCurrentAnimation("smallWalk")) {
-                this.renderable.setCurrentAnimation("smallWalk");
-                this.renderable.setAnimationFrame();
+        if(!this.big){
+            if(this.body.vel.x !== 0){
+                if(!this.renderable.isCurrentAnimation("smallWalk") && !this.renderable.isCurrentAnimation("grow") && !this.renderable.isCurrentAnimation("shrink")) {
+                    this.renderable.setCurrentAnimation("smallWalk");
+                    this.renderable.setAnimationFrame();
+                }
+            }else{
+                this.renderable.setCurrentAnimation("idle");
             }
         }else{
-            this.renderable.setCurrentAnimation("idle");
+            if(this.body.vel.x !== 0){
+                if(!this.renderable.isCurrentAnimation("bigWalk") && !this.renderable.isCurrentAnimation("grow") && !this.renderable.isCurrentAnimation("shrink")) {
+                    this.renderable.setCurrentAnimation("bigWalk");
+                    this.renderable.setAnimationFrame();
+                }
+            }else{
+                this.renderable.setCurrentAnimation("bigidle");
+            }
         }
         
         this._super(me.Entity, "update", [delta]);
         return true;
     },
-    
+    //when collide with bad guy, dies
     collideHandler: function(response){
         
         var ydif = this.pos.y - response.b.pos.y;
         console.log(ydif);
         
-        if(responce.b.type === 'badguy'){
+        if(response.b.type === 'BadGuy'){
             if(ydif <= -115) {
-                responce.b.alive = false;
+                response.b.alive = false;
             }else{
-                
+                if(this.big){
+                    this.big = false;
+                    this.body.vel.y -= this.body.accel.y * me.timer.tick;
+                    this.jumping = true;
+                    this.renderable.setCurrentAnimation("shrink", "idle");
+                    this.renderable.setAnimationFrame();
+//                }else if(this.poweredup){
+                    
+                }else{
                 me.state.change(me.state.MENU);
-            }
+                }
+           }
+//        }else if(responce.b.type ==='bigidle'){
+//            this.renderable.setCurrentAnimation("powerUp");
+            
+        }else if(response.b.type === 'Mushroom'){
+            this.renderable.setCurrentAnimation("grow", "bigidle");
+            this.big = true;
+            me.game.world.removeChild(response.b);
         }
-    
+    }
     
 });
-
+//sets the spawn level
 game.LevelTrigger = me.Entity.extend({
     init: function(x, y, settings){
         this._super(me.Entity, 'init', [x, y, settings]);
@@ -89,7 +128,7 @@ game.LevelTrigger = me.Entity.extend({
     }
     
 });
-
+//bad guy code
 game.BadGuy = me.Entity.extend({
     init: function(x, y, settings){
         this._super(me.Entity, 'init', [x, y, {
@@ -113,7 +152,7 @@ game.BadGuy = me.Entity.extend({
         
         this.alwaysUpdate = true;
         this.walkLeft = false;
-        this.type = "badguy";
+        this.type = "BadGuy";
         
         this.renderable.addAnimation("run", [0, 1, 2], 80);
         this.renderable.setCurrentAnimation("run");
@@ -123,29 +162,63 @@ game.BadGuy = me.Entity.extend({
         
     },
     
-//    update: funtion(delta) {
-//        this.body.update(delta);
-//        me.collision.check(this, true, this.collideHandler.bind(this), true);
-//           
-//        if(this.alive){
-//            if(this.walkLeft && this.pos.x <= this.startX){
-//                this.walkLeft = false;
-//            }else if(!this.walkLeft && this.pos.x >= this.endX){
-//                this.walkLeft = true;
-//            }
-//            this.flipX(!this.walkLeft);
-//            this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * meee.timer.tick;
-//                    
-//        }else{
-//            me.game.worldremoveChild(this);
-//        }
-//        
-//        this._super(me.Entity,"update", [delta]);
-//        return true;
-//    }
-//    
-//    collideHandler: function() {
-//        
-//    }
-//    
+update: function(delta) {
+    this.body.update(delta);
+    me.collision.check(this, true, this.collideHandler.bind(this), true);
+
+    if(this.alive){
+        if(this.walkLeft && this.pos.x <= this.startX){
+            this.walkLeft = false;
+        }else if(!this.walkLeft && this.pos.x >= this.endX){
+            this.walkLeft = true;
+        }
+        this.flipX(!this.walkLeft);
+        this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
+
+    }else{
+        me.game.world.removeChild(this);
+    }
+
+    this._super(me.Entity,"update", [delta]);
+    return true;
+},
+
+
+
+collideHandler: function() {
+
+}
+    
 });
+//mushroom
+game.Mushroom = me.Entity.extend({
+        init: function(x, y, settings){
+            this._super(me.Entity, 'init', [x, y, {
+                    image: "mushroom",
+                    spritewidth: "64",
+                    spriteheight: "64",
+                    width: 64,
+                    height: 64,
+                    getShape: function () {
+                        return (new me.Rect(0, 0, 64, 64)).toPolygon();
+                    }
+            }]);
+        me.collision.check(this);
+        this.type = "Mushroom";
+        }
+});
+//Fire flower
+//game.flower = me.Entity.extend({
+//        init: function(x, y, settings){
+//            this._super(me.Entity, 'init' [x, y, {
+//                    image: "flower",
+//                    spritewidth: "64",
+//                    spriteheight: "64",
+//                    width: 64,
+//                    height: 64,
+//                    getShape: function () {
+//                        return (new me.Rect(0, 0, 64, 64)).toPolygon();
+//                    }
+//            }]);
+//        }
+//});
