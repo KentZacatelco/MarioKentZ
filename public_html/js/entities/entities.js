@@ -18,14 +18,6 @@ game.PlayerEntity = me.Entity.extend({
         this.renderable.addAnimation("bigidle", [19]);
         this.renderable.addAnimation("shrink",[0, 1, 2, 3], 80);
         this.renderable.addAnimation("grow",[4, 5, 6, 7], 80);
-//        this.renderable.addanimation("powerUp",[25], 80);
-//        this.renderable.addAnimation("powerDown",[7], 80);
-//        this.renderable.addAnimation("poweredUp", [25], 80);
-//        this.renderable.addAnimation("smallpoweredUp", [37], 80);
-//        this.renderable.addAnimation("smallpowerUp", [37], 80);
-//        this.renderable.addAnimation("smallpowerDown", [3], 80);
-//        this.renderable.addAnimation("poweredupwalk", [32, 33, 34, 35, 36, 37], 80);
-//        this.renderable.addAnimation("smallpoweredupwalk", [20, 21, 22, 23, 24, 25], 80);
         
         this.renderable.setCurrentAnimation("idle");
 
@@ -87,6 +79,8 @@ game.PlayerEntity = me.Entity.extend({
         if(response.b.type === 'BadGuy'){
             if(ydif <= -115) {
                 response.b.alive = false;
+                this.body.vel.y -= this.body.accel.y * me.timer.tick;
+                this.jumping = true;
             }else{
                 if(this.big){
                     this.big = false;
@@ -94,14 +88,12 @@ game.PlayerEntity = me.Entity.extend({
                     this.jumping = true;
                     this.renderable.setCurrentAnimation("shrink", "idle");
                     this.renderable.setAnimationFrame();
-//                }else if(this.poweredup){
+                }else if(this.poweredup){
                     
                 }else{
                 me.state.change(me.state.MENU);
                 }
            }
-//        }else if(responce.b.type ==='bigidle'){
-//            this.renderable.setCurrentAnimation("powerUp");
             
         }else if(response.b.type === 'Mushroom'){
             this.renderable.setCurrentAnimation("grow", "bigidle");
@@ -207,18 +199,3 @@ game.Mushroom = me.Entity.extend({
         this.type = "Mushroom";
         }
 });
-//Fire flower
-//game.flower = me.Entity.extend({
-//        init: function(x, y, settings){
-//            this._super(me.Entity, 'init' [x, y, {
-//                    image: "flower",
-//                    spritewidth: "64",
-//                    spriteheight: "64",
-//                    width: 64,
-//                    height: 64,
-//                    getShape: function () {
-//                        return (new me.Rect(0, 0, 64, 64)).toPolygon();
-//                    }
-//            }]);
-//        }
-//});

@@ -26,7 +26,7 @@ var game = {
 	}
 
 	// Initialize the audio.
-	me.audio.init("mp3,ogg");
+//	me.audio.init("SuperMario");
 
 	// Set a callback to run when loading is complete.
 	me.loader.onload = this.loaded.bind(this);
@@ -43,7 +43,6 @@ var game = {
                 me.pool.register("Mario", game.PlayerEntity, true);
                 me.pool.register("BadGuy", game.BadGuy);
                 me.pool.register("mushroom", game.Mushroom);
-//                me.pool.register("flower", game.Flower);
                 
                 me.pool.register("levelTrigger", game.LevelTrigger);
             

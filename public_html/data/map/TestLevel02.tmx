@@ -46,4 +46,13 @@
  <objectgroup name="CollectableEntities">
   <object name="Mushroom" x="348" y="566" width="68" height="64"/>
  </objectgroup>
+ <objectgroup name="collidableEntities">
+  <object name="levelTrigger" x="1258" y="502" width="74" height="126">
+   <properties>
+    <property name="level" value="testLevel03"/>
+    <property name="xSpawn" value="40"/>
+    <property name="ySpawn" value="400"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

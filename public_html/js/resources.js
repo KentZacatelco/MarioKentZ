@@ -10,7 +10,6 @@ game.resources = [
         {name: "title-screen", type:"image", src: "data/img/MarioProject.2.png"},
         {name: "slime", type:"image", src: "data/img/slime-spritesheet.png"},
         {name: "mushroom", type:"image", src: "data/img/mushroom.png"},
-//        {name: "flower", type:"image", src: "data/img/flower.png"},
         
 	/* Atlases 
 	 * @example
@@ -24,12 +23,13 @@ game.resources = [
  	 */
         {name: "TestLevel01", type: "tmx", src: "data/map/TestLevel01.tmx"},
         {name: "TestLevel02", type: "tmx", src: "data/map/TestLevel02.tmx"},
+        {name: "TestLevel03", type: "tmx", src: "data/map/TestLevel03.tmx"},
 
 	/* Background music. 
 	 * @example
 	 * {name: "example_bgm", type: "audio", src: "data/bgm/"},
 	 */	
-        //{name: "MarioGround", type: "audio", src: "data/bgm/"}
+//        {name: "SuperMario", type: "audio", src: "data/bgm/"},
 
 	/* Sound effects. 
 	 * @example

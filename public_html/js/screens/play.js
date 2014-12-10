@@ -7,6 +7,7 @@ game.PlayScreen = me.ScreenObject.extend({
 		game.data.score = 0;
                 
                 me.levelDirector.loadLevel("TestLevel01");
+//                me.audio.playTrack("SuperMario");
                 
                 this.resetPlayer(0, 400);
                 
